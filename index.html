@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECHOFALL | Главная</title>
+    <style>
+        :root { --main: #b2a384; --bg: #050505; }
+        body { 
+            background: var(--bg); color: #fff; font-family: 'Segoe UI', sans-serif; 
+            margin: 0; height: 100vh; display: flex; align-items: center; 
+            justify-content: center; overflow: hidden; position: relative;
+        }
+
+        /* ФОНОВЫЙ ТЕКСТ */
+        .bg-text { 
+            position: absolute; font-size: 15vw; font-weight: 900; 
+            color: rgba(178, 163, 132, 0.03); z-index: 0; user-select: none; 
+            letter-spacing: -5px;
+        }
+
+        .content-wrapper { position: relative; z-index: 5; text-align: center; }
+
+        /* ЛОГОТИП */
+        .logo { 
+            width: 180px; margin-bottom: 20px; 
+            filter: drop-shadow(0 0 15px rgba(178, 163, 132, 0.2));
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .logo:hover { transform: scale(1.03); }
+
+        h1 { 
+            text-transform: uppercase; letter-spacing: 12px; font-size: 0.75rem; 
+            color: var(--main); margin-bottom: 60px; opacity: 0.8;
+        }
+
+        /* НАВИГАЦИЯ */
+        .nav-hub { 
+            display: flex; gap: 5px; background: rgba(255, 255, 255, 0.02); 
+            padding: 6px; border: 1px solid rgba(255, 255, 255, 0.05); 
+        }
+
+        .nav-hub a { 
+            text-decoration: none; color: rgba(255, 255, 255, 0.5) !important; 
+            text-transform: uppercase; font-size: 0.65rem; letter-spacing: 2px; 
+            padding: 14px 22px; transition: all 0.3s; 
+            cursor: pointer;
+        }
+
+        .nav-hub a:hover { 
+            color: var(--main) !important; 
+            background: rgba(178, 163, 132, 0.1); 
+        }
+
+        .active { 
+            color: var(--main) !important; 
+            background: rgba(178, 163, 132, 0.05);
+            box-shadow: inset 0 -2px 0 var(--main);
+        }
+
+        .nav-hub a:active { transform: scale(0.95); }
+    </style>
+</head>
+<body>
+
+    <div id="particles-js" style="position: absolute; width: 100%; height: 100%; z-index: 1; pointer-events: none;"></div>
+    <div class="bg-text">ECHOFALL</div>
+
+    <div class="content-wrapper">
+        <img src="logo.jpg" alt="ECHOFALL" class="logo">
+        <h1>The Last Echo You'll Hear</h1>
+        <div class="nav-hub">
+            <a href="index.html" class="active">Главная</a>
+            <a href="news.html">Новости</a>
+            <a href="roster.html">Состав</a>
+            <a href="achievements.html">Достижения</a>
+            <a href="matches.html">Матчи</a>
+            <a href="recruit.html">Вступить</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Частицы на фоне
+        particlesJS("particles-js", { "particles": { "number": { "value": 40 }, "color": { "value": "#b2a384" }, "opacity": { "value": 0.2 }, "size": { "value": 1.5 }, "move": { "enable": true, "speed": 0.8, "direction": "top" } } });
+
+        // ЗВУК НА КНОПКИ (Мягкий клик)
+        const navLinks = document.querySelectorAll('.nav-hub a');
+        const clickSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3');
+        clickSound.volume = 0.2;
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                clickSound.currentTime = 0;
+                clickSound.play();
+                
+                const href = link.getAttribute('href');
+                // Проверяем, чтобы не было задержки, если мы уже на этой странице
+                if (href !== "index.html") {
+                    e.preventDefault();
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 120);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

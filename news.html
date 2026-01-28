@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECHOFALL | Новости</title>
+    <style>
+        :root { --main: #b2a384; --bg: #050505; --card: rgba(20, 20, 20, 0.6); }
+        
+        body { 
+            background: var(--bg); color: #fff; font-family: 'Segoe UI', sans-serif; 
+            margin: 0; min-height: 100vh; padding: 60px 20px;
+            display: flex; flex-direction: column; align-items: center;
+            position: relative; overflow-x: hidden;
+        }
+
+        /* ШАПКА И НАВИГАЦИЯ */
+        .header { text-align: center; z-index: 10; margin-bottom: 50px; width: 100%; }
+        
+        .nav-hub { 
+            display: inline-flex; gap: 5px; background: rgba(255, 255, 255, 0.02); 
+            padding: 6px; border: 1px solid rgba(255, 255, 255, 0.05); margin-top: 20px;
+        }
+
+        .nav-hub a { 
+            text-decoration: none; color: rgba(255, 255, 255, 0.5) !important; 
+            text-transform: uppercase; font-size: 0.65rem; letter-spacing: 2px; 
+            padding: 12px 20px; transition: 0.3s; cursor: pointer;
+        }
+
+        .nav-hub a:hover { color: var(--main) !important; background: rgba(178, 163, 132, 0.1); }
+        .active { color: var(--main) !important; box-shadow: inset 0 -2px 0 var(--main); }
+
+        /* СЕТКА НОВОСТЕЙ */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            max-width: 1100px;
+            width: 100%;
+            z-index: 10;
+        }
+
+        .news-card {
+            background: var(--card);
+            border: 1px solid rgba(178, 163, 132, 0.1);
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .news-card:hover {
+            border-color: var(--main);
+            transform: translateY(-5px);
+            background: rgba(178, 163, 132, 0.03);
+        }
+
+        /* ЛИНИЯ-СКАНЕР ПРИ НАВЕДЕНИИ */
+        .news-card::after {
+            content: ""; position: absolute; top: -100%; left: 0; width: 100%; height: 2px;
+            background: var(--main); opacity: 0; transition: 0s;
+        }
+
+        .news-card:hover::after {
+            animation: scan-line 1.5s infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes scan-line {
+            0% { top: 0%; }
+            100% { top: 100%; }
+        }
+
+        .news-meta {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 10px;
+        }
+
+        .status { font-size: 9px; color: var(--main); letter-spacing: 2px; text-transform: uppercase; }
+        .date { font-size: 9px; color: #444; letter-spacing: 1px; }
+
+        h2 { font-size: 1.2rem; font-weight: 300; margin: 0 0 15px 0; letter-spacing: 1px; color: #eee; }
+        p { font-size: 0.85rem; line-height: 1.6; color: #888; margin: 0; }
+
+        /* ФОНОВЫЙ ТЕКСТ */
+        .bg-text { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-size: 20vw; font-weight: 900; color: rgba(178, 163, 132, 0.02);
+            z-index: 0; user-select: none; pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="particles-js" style="position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; pointer-events: none;"></div>
+    <div class="bg-text">INTEL</div>
+
+    <div class="header">
+        <div class="nav-hub">
+            <a href="index.html">Главная</a>
+            <a href="news.html" class="active">Новости</a>
+            <a href="roster.html">Состав</a>
+            <a href="achievements.html">Достижения</a>
+            <a href="matches.html">Матчи</a>
+            <a href="recruit.html">Вступить</a>
+        </div>
+    </div>
+
+    <div class="news-grid">
+        <div class="news-card">
+            <div class="news-meta">
+                <span class="status">[ SYSTEM UPDATE ]</span>
+                <span class="date">27.01.2026</span>
+            </div>
+            <h2>Синхронизация интерфейса</h2>
+            <p>Завершено обновление визуальных модулей. Добавлена система звукового отклика и улучшена навигация между секторами. Статус системы: Стабильно.</p>
+        </div>
+
+        <div class="news-card">
+            <div class="news-meta">
+                <span class="status">[ RECRUITMENT ]</span>
+                <span class="date">27.01.2026</span>
+            </div>
+            <h2>Формирование состава</h2>
+            <p>Приоритетная задача: укомплектовать основной ростер ECHOFALL. Требуются игроки с высоким уровнем дисциплины и пониманием меты CS2. Мы не ищем временных игроков — нам нужны те, кто готов вписывать свои имена в историю тега. 
+            Доступ к заявкам открыт.</p>
+        </div>
+
+        <div class="news-card" style="opacity: 0.5;">
+            <div class="news-meta">
+                <span class="status">[ ENCRYPTED ]</span>
+                <span class="date">--.--.----</span>
+            </div>
+            <h2>Данные зашифрованы</h2>
+            <p>Ожидание следующего пакета данных из центрального штаба...</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS("particles-js", { "particles": { "number": { "value": 40 }, "color": { "value": "#b2a384" }, "opacity": { "value": 0.2 }, "size": { "value": 1.5 }, "move": { "enable": true, "speed": 0.8, "direction": "top" } } });
+
+        const navLinks = document.querySelectorAll('.nav-hub a');
+        const clickSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3');
+        clickSound.volume = 0.2;
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                clickSound.currentTime = 0;
+                clickSound.play();
+                const href = link.getAttribute('href');
+                if (href !== "news.html") {
+                    e.preventDefault();
+                    setTimeout(() => { window.location.href = href; }, 120);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

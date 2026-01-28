@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECHOFALL | Матчи</title>
+    <style>
+        :root { 
+            --main: #b2a384; 
+            --bg: #050505; 
+            --card: rgba(15, 15, 15, 0.8); 
+            --glow: rgba(178, 163, 132, 0.3);
+        }
+        
+        body { 
+            background: var(--bg); color: #fff; font-family: 'Segoe UI', sans-serif; 
+            margin: 0; min-height: 100vh; padding: 60px 20px;
+            display: flex; flex-direction: column; align-items: center;
+            position: relative; overflow-x: hidden;
+        }
+
+        /* НАВИГАЦИЯ */
+        .header { text-align: center; z-index: 10; margin-bottom: 80px; }
+        .nav-hub { 
+            display: inline-flex; gap: 5px; background: rgba(255, 255, 255, 0.02); 
+            padding: 6px; border: 1px solid rgba(255, 255, 255, 0.05); 
+        }
+        .nav-hub a { 
+            text-decoration: none; color: rgba(255, 255, 255, 0.5) !important; 
+            text-transform: uppercase; font-size: 0.65rem; letter-spacing: 2px; 
+            padding: 12px 20px; transition: 0.3s; cursor: pointer;
+        }
+        .nav-hub a:hover { color: var(--main) !important; background: rgba(178, 163, 132, 0.1); }
+        .active { color: var(--main) !important; box-shadow: inset 0 -2px 0 var(--main); }
+
+        /* ФОНОВЫЙ ТЕКСТ */
+        .bg-text { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-size: 20vw; font-weight: 900; color: rgba(178, 163, 132, 0.02);
+            z-index: 0; user-select: none; pointer-events: none; text-transform: uppercase;
+            letter-spacing: 20px;
+        }
+
+        /* КОНТЕЙНЕР МАТЧЕЙ */
+        .matches-wrapper {
+            width: 100%;
+            max-width: 900px;
+            z-index: 10;
+        }
+
+        .terminal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(178, 163, 132, 0.1);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        .terminal-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: var(--main);
+            opacity: 0.6;
+        }
+
+        /* ГЛАВНЫЙ БЛОК (Дизайн как у Roster/Achievements) */
+        .match-display {
+            position: relative;
+            background: var(--card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 120px 40px;
+            text-align: center;
+            /* Срезанные углы для стиля HUD */
+            clip-path: polygon(0 0, 97% 0, 100% 10%, 100% 100%, 3% 100%, 0 90%);
+            transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            cursor: default;
+        }
+
+        /* Эффект при наведении как в составе */
+        .match-display:hover {
+            transform: scale(1.02);
+            background: rgba(178, 163, 132, 0.05);
+            border-color: var(--main);
+            box-shadow: 0 0 30px rgba(178, 163, 132, 0.1);
+        }
+
+        /* Декоративный уголок как в Roster */
+        .match-display::before {
+            content: ""; position: absolute; top: 20px; left: 20px;
+            width: 15px; height: 15px; border-top: 1px solid var(--main); border-left: 1px solid var(--main);
+            opacity: 0.3; transition: 0.3s;
+        }
+
+        .match-display:hover::before { opacity: 1; }
+
+        .main-status-text h2 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            margin: 0;
+            letter-spacing: 12px;
+            text-transform: uppercase;
+            color: #fff;
+            filter: drop-shadow(0 0 10px var(--glow));
+        }
+
+        .sub-status-text {
+            margin-top: 20px;
+            font-size: 0.7rem;
+            color: var(--main);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            opacity: 0.6;
+        }
+
+        /* Индикатор System Live */
+        .live-indicator {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 0.6rem; color: rgba(255,255,255,0.4); text-transform: uppercase;
+        }
+        .dot {
+            width: 6px; height: 6px; background: var(--main);
+            border-radius: 50%; animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.2; }
+            50% { opacity: 1; }
+            100% { opacity: 0.2; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="particles-js" style="position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; pointer-events: none;"></div>
+    <div class="bg-text">MATCH</div>
+
+    <div class="header">
+        <div class="nav-hub">
+            <a href="index.html">Главная</a>
+            <a href="news.html">Новости</a>
+            <a href="roster.html">Состав</a>
+            <a href="achievements.html">Достижения</a>
+            <a href="matches.html" class="active">Матчи</a>
+            <a href="recruit.html">Вступить</a>
+        </div>
+    </div>
+
+    <div class="matches-wrapper">
+        <div class="terminal-header">
+            <div class="terminal-title">ECHOFALL // MATCH</div>
+            <div class="live-indicator">
+                <div class="dot"></div>
+                Match Live
+            </div>
+        </div>
+
+        <div class="match-display">
+            <div class="main-status-text">
+                <h2>Матчей нет</h2>
+                <div class="sub-status-text">Ожидайте следующих игр...</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS("particles-js", { 
+            "particles": { 
+                "number": { "value": 40 }, 
+                "color": { "value": "#b2a384" }, 
+                "opacity": { "value": 0.2 }, 
+                "size": { "value": 1.5 }, 
+                "move": { "enable": true, "speed": 0.8, "direction": "top" } 
+            } 
+        });
+
+        const navLinks = document.querySelectorAll('.nav-hub a');
+        const clickSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3');
+        clickSound.volume = 0.2;
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                const href = link.getAttribute('href');
+                if (href !== "matches.html") {
+                    clickSound.currentTime = 0;
+                    clickSound.play();
+                    e.preventDefault();
+                    setTimeout(() => { window.location.href = href; }, 120);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
