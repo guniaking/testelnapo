@@ -1,2 +1,2 @@
-# echofall
-Official website of Echofall CS2 team.
+# Elnapo Academy
+Official website of Elnapo CS2 team.
